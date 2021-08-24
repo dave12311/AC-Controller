@@ -1,0 +1,99 @@
+#!/usr/bin/env python3
+# NEC codes for controlling the AC
+
+ON = "B24DBF40B04F"
+OFF = "B24D7B84E01F"
+SWING = "B24D6B94E01F"
+DIRECT = "B24D0FF0E01F" # No repeat send
+TURBO = "B54AF50AA25D"
+LED = "B54AF50AA55A"
+
+class _fan_speeds():
+	AUTO = "B24DBF40B04F"
+	LOW = "B24D9F60B04F"
+	MEDIUM = "B24D5FA0B04F"
+	HIGH = "B24D3FC0B04F"
+
+FAN_SPEED = _fan_speeds
+
+class _modes():
+	DRY = "B24D01FEC4FF"
+	HEAT = "B24DA15ECCFF"
+	FAN = "B24DA15EE4FF"
+	AUTO = "B24D01FEC8FF"
+	COOL = "B24DA15EC0FF"
+
+MODE = _modes
+
+def TIMER_OFF(t):
+	timers = [
+		"B24DBF40C03F", # 0
+		"B24DA15EC0FF", # 0.5
+		"B24DA35CC0FF",
+		"B24DA55AC0FF",
+		"B24DA758C0FF",
+		"B24DA956C0FF",
+		"B24DAB54C0FF",
+		"B24DAD52C0FF",
+		"B24DAF50C0FF",
+		"B24DB14EC0FF",
+		"B24DB34CC0FF",
+		"B24DB54AC0FF",
+		"B24DB748C0FF",
+		"B24DB946C0FF",
+		"B24DBB44C0FF",
+		"B24DBD42C0FF",
+		"B24DBF40C0FF",
+		"B24DA15EC1FF",
+		"B24DA35CC1FF",
+		"B24DA55AC1FF",
+		"B24DA758C1FF", # 10
+		"B24DAB54C1FF", # 11
+		"B24DAF50C1FF",
+		"B24DB34CC1FF",
+		"B24DB748C1FF",
+		"B24DBB44C1FF",
+		"B24DBF40C1FF",
+		"B24DA35CC2FF",
+		"B24DA758C2FF",
+		"B24DAB54C2FF",
+		"B24DAF50C2FF",
+		"B24DB34CC2FF",
+		"B24DB748C2FF",
+		"B24DBB44C2FF",
+		"B24DBF40C2FF"  # 24
+	]
+
+	if t < 0.5:
+		return timers[0]
+	elif t > 24:
+		return timers[34]
+	elif t < 10:
+		return timers[t * 2]
+	else:
+		return timers[10 + t]
+
+def TEMPERATURE(t):
+	temps = [
+		"B24DBF4000FF", # 17
+		"B24DBF4010EF",
+		"B24DBF4030CF",
+		"B24DBF4020DF",
+		"B24DBF40609F",
+		"B24DBF40708F",
+		"B24DBF4050AF",
+		"B24DBF4040BF",
+		"B24DBF40C03F",
+		"B24DBF40D02F",
+		"B24DBF40906F",
+		"B24DBF40807F",
+		"B24DBF40A05F",
+		"B24DBF40B04F"  # 30
+	]
+
+	if t < 17:
+		return temps[0]
+	elif t > 30:
+		return temps[13]
+	else:
+		return temps[t - 17]

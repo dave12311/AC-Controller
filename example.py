@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
-from ac_interface import IR
+from ac_interface import IR, nec_codes
+from time import sleep
 
 ir = IR()
-ir.send_code("101100100100110110111111010000001100000000111111")
+ir.send_code(nec_codes.TEMPERATURE(24))
